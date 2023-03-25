@@ -10,7 +10,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'home-work';
   submit (form:any){
-    console.log(form);
+    if(form.valid){
+      console.log(form.value);
+      return;
+      }
+      form.control.markAllAsTouched()
     
   }
 }
