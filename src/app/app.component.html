@@ -1,13 +1,43 @@
 <div class="wrapper">
-  <form>
-      <div class="form-item">
-          <label for="login">Login</label>
-          <input placeholder="Your Login...">
-      </div>
-      <div class="form-item">
-          <label for="email">Email</label>
-          <input id="email" placeholder="Your email...">
-      </div>
-      <button type="submit">Submit</button>
-  </form>
+    <form (ngSubmit)="submit(user)" #user="ngForm">
+        <div class="form-item">
+            <label for="login">Login</label>
+            <input 
+            placeholder="Your Login..." 
+            id="login" 
+            name="login" 
+            #login="ngModel"
+            ngModel
+            required
+            pattern="^[a-zA-Z0-9]+$"
+            >
+            <p *ngIf="login.invalid && login.touched && login.errors?.['required']">The field must not be empty</p>
+            <p *ngIf="login.invalid && login.touched && login.errors?.['pattern']">The field must not contain some spaces</p>
+        </div>
+        <div class="form-item">
+            <label for="email">Email</label>
+            <input id="email" placeholder="Your email..." name="email" 
+            #email="ngModel"
+            email
+            required
+            ngModel>
+            <p *ngIf="email.invalid && email.touched && email.errors?.['required']">The field must not be empty</p>
+            <p *ngIf="email.invalid && email.touched && email.errors?.['email']">The email is incorrect</p>
+        </div>
+        <div class="form-item">
+            <label for="password">Password</label>
+            <input id="password" 
+            type="password" 
+            placeholder="Your password..." 
+            name="password"
+            #password="ngModel"
+            minlength="7" 
+            required
+            ngModel>
+            <p *ngIf="password.invalid && password.touched && password.errors?.['required']">The field must not be empty</p>
+
+            <p *ngIf="password.invalid && password.touched && password.errors?.['minlength']">The password must contain more than {{password.errors?.['minlength']['requiredLength']}} characters</p>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
 </div>
