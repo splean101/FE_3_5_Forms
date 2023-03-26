@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 
@@ -12,7 +12,13 @@ export class AppComponent {
   title = 'home-work';
   form!: FormGroup
 ngOnInit(){
-  this.form = new FormGroup({})
+  this.form = new FormGroup({
+    login1: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]+$')]),
+    email1: new FormControl('', [Validators.required, Validators.email]),
+    password1: new FormControl('', [Validators.required, Validators.minLength(7), Validators.pattern('[a-z A-Z]+$')]),
+    
+
+  })
 }
 
   submit (form:any){
@@ -23,7 +29,7 @@ ngOnInit(){
       form.control.markAllAsTouched()
   }
   submit1(){    
-      console.log(this.form);     
+      console.log(this.form.value);     
     
   }
 }
