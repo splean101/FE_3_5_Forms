@@ -46,17 +46,21 @@
             <p
                 *ngIf="form.get('email1')?.['invalid'] && form.get('email1')?.['touched'] && form.get('email1')?.['errors']?.['email']">
                 The email is incorrect</p>
+            <p *ngIf="form.get('email1')?.['pending']">Cheking email...</p>
+            <p *ngIf="form.get('email1')?.['errors']?.['uniqEmail']">This email address already exists</p>
+
         </div>
         <div class="form-item">
             <label for="password1">Password1</label>
             <input id="password1" type="password" placeholder="Your password..." name="password1"
                 formControlName="password1">
-                <p
+            <p
                 *ngIf="form.get('password1')?.['invalid'] && form.get('password1')?.['touched'] && form.get('password1')?.['errors']?.['required']">
                 The field must not be empty</p>
             <p
                 *ngIf="form.get('password1')?.['invalid'] && form.get('password1')?.['touched'] && form.get('password1')?.['errors']?.['minlength']">
-                The password must contain more than {{form.get('password1')?.['errors']?.['minlength']?.['requiredLength']}} characters.</p>
+                The password must contain more than
+                {{form.get('password1')?.['errors']?.['minlength']?.['requiredLength']}} characters.</p>
         </div>
         <button type="submit">Submit</button>
     </form>

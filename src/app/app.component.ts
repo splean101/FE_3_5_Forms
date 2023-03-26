@@ -14,7 +14,7 @@ export class AppComponent {
 ngOnInit(){
   this.form = new FormGroup({
     login1: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]+$')]),
-    email1: new FormControl('', [Validators.required, Validators.email]),
+    email1: new FormControl('', [Validators.required, Validators.email], [this.checkEmail]),
     password1: new FormControl('', [Validators.required, Validators.minLength(7), Validators.pattern('[a-z A-Z]+$')]),
     
 
@@ -29,7 +29,25 @@ ngOnInit(){
       form.control.markAllAsTouched()
   }
   submit1(){    
-      console.log(this.form.value);     
-    
+    if(this.form.valid){
+       console.log(this.form.value);
+       } else {
+       this.form.markAllAsTouched()
+       }    
   }
+      async checkEmail(control: any): Promise<any> {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        const users = await response.json();
+        const emails = users.map((user: any) => user.email);
+        if(emails.includes(control.value)){
+          control.markAllAsTouched();
+          return {uniqEmail: true};
+        } ;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
+  
 }
